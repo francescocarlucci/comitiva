@@ -37,13 +37,6 @@ contract Comitiva {
 		_;
 	}
 
-	modifier noDuplicateOwner(address _owner) {
-		for (uint i = 0; i < owners.length; i++) {
-			require(owners[i] != _owner, "Owner already exists");
-		}
-		_;
-	}
-
 	modifier txExists(uint _txId) {
 		require(_txId < transactions.length, "Transaction does not exist"); // _txId within the bound of the array
 		_;
@@ -87,10 +80,6 @@ contract Comitiva {
 		(bool success, ) = pendingTransaction.to.call{value: pendingTransaction.value}("");
 		require(success, "Transaction failed");
 	}
-
-	//function updateThreshold(uint _threshold) external onlyOwner {}
-
-	//function addOwner(address _newOwner) external onlyOwner noDuplicateOwner(_newOwner) {}
 
 	function getOwners() external view returns (address[] memory) {
 		return owners;
